@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+// your custom variables
+@import "./variables.scss";
+
+// UIkit default variables and mixins
+@import "uikit/src/scss/variables-theme.scss";
+@import "uikit/src/scss/mixins-theme.scss";
+@import "my-mixins-theme.scss";
+
+// import UIkit
+@import "uikit/src/scss/uikit-theme.scss";
+
+
+/* Nav */
+.uk-navbar-nav > li a.uk-active {
+	color: $navbar-nav-item-active-color;
+}
+.router-link-active {
+	@extend .uk-active;
+}
+
+/* Hover */
+a:hover {
+	color: $nav-primary-item-hover-color;
+	@if(mixin-exists(hook-nav-primary-item-hover)) {@include hook-nav-primary-item-hover();}
+}
+
+
+
+/* Active */
+.router-link-active {
+	color: $nav-primary-item-active-color;
+}
+
+.uk-input,
+.uk-select,
+.uk-textarea,
+.uk-radio,
+.uk-checkbox {
+	border-radius: $base-border-radius-s;
+}
+.text-balance {
+	text-wrap: balance;
+}
