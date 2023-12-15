@@ -9,8 +9,11 @@
 	
 	
 	onMounted(async () => {
-		// Comprueba si el item está en la colección del usuario
-		isInCollection.value = useritems.value.some((userItem) => userItem.items_id === itemInfo.id);
+		const { data: { user } } = await supabase.auth.getUser();
+		if (user) {
+			// Comprueba si el item está en la colección del usuario
+			isInCollection.value = useritems.value.some((userItem) => userItem.items_id === itemInfo.id);
+		}
 	});
 
 	const { data: item } = await useAsyncData(async () => {
@@ -60,11 +63,11 @@
 </script>
 
 <template>
-	<div class="uk-grid">
-		<figure class="uk-width-1-3">
+	<div class="uk-grid" uk-grid>
+		<figure class="uk-width-2-5@m uk-width-1-3@l">
 			<img src="assets/placeholder.png" class="uk-border-rounded" width="100%">
 		</figure>
-		<div class="uk-width-2-3">
+		<div class="uk-width-3-5@m uk-width-2-3@l">
 			<h1>{{ itemInfo.title }} id: {{ itemInfo.id }}</h1>
 			<ul>
 				<li>Brand: <NuxtLink :to="'/brands/' + itemInfo.brands.id"> {{ itemInfo.brands.title }}</NuxtLink></li>
@@ -73,29 +76,29 @@
 				<li>Code: {{ itemInfo.code }}</li>
 				<li>Type: Human</li>
 			</ul>
-				<template v-if="user">
-					<NuxtLink v-if="!isInCollection" class="uk-button uk-button-primary" @click="addtocollection">
-						<span class="uk-margin-small-right" uk-icon="check"></span> Añadir a mi colección
-					</NuxtLink>
+			<template v-if="user">
+				<NuxtLink v-if="!isInCollection" class="uk-button uk-button-primary" @click="addtocollection">
+					<span class="uk-margin-small-right" uk-icon="check"></span> Añadir a mi colección
+				</NuxtLink>
 
-					<NuxtLink v-if="isInCollection" class="uk-button uk-button-danger" @click="removetocollection">
-						<span class="uk-margin-small-right" uk-icon="close"></span> Quitar de mi colección
-					</NuxtLink>
+				<NuxtLink v-if="isInCollection" class="uk-button uk-button-danger" @click="removetocollection">
+					<span class="uk-margin-small-right" uk-icon="close"></span> Quitar de mi colección
+				</NuxtLink>
 
-					<NuxtLink class="uk-button uk-button-default uk-margin-small-left">
-						<span class="uk-margin-small-right" uk-icon="heart"></span> Wishlist
-					</NuxtLink>
-				</template>
+				<NuxtLink class="uk-button uk-button-default uk-margin-small-left">
+					<span class="uk-margin-small-right" uk-icon="heart"></span> Wishlist
+				</NuxtLink>
+			</template>
 
-				<template v-else>
-					<NuxtLink to="/login" class="uk-button uk-button-primary">
-						Ingresa para administrar tu cuenta
-					</NuxtLink>
-				</template>
+			<template v-else>
+				<NuxtLink to="/login" class="uk-button uk-button-primary">
+					Ingresa para administrar tu cuenta
+				</NuxtLink>
+			</template>
 		</div>
 	</div>
 
-	<div class="uk-grid">
+	<div class="uk-grid" uk-grid>
 		<div class="uk-width-2-3@m">
 			<h3>Info</h3>
 			<p>
