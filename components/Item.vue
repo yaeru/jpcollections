@@ -5,6 +5,7 @@
 		brand: Array,
 		brandId: String,
 		brandTitle: String,
+		categoryTitle: String,
 	});
 </script>
 
@@ -17,7 +18,7 @@
 			</div>
 			<div class="uk-card-body">
 				<h3 class="uk-card-title uk-margin-remove-bottom">{{title}}</h3>
-				<p class="uk-margin-small-top">{{brandTitle}}</p>
+				<p class="uk-margin-small-top">{{brandTitle}} - {{categoryTitle}}</p>
 			</div>
 		</article>
 	</NuxtLink>

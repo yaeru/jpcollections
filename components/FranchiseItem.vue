@@ -7,7 +7,7 @@
 </script>
 
 <template>
-	<NuxtLink :to="'/franchises/' + id" class="uk-text-center">
+	<NuxtLink :to="'/franchises/' + id" class="uk-link-reset uk-text-center">
 		<article class="uk-card uk-card-small uk-card-default uk-card-body">
 			<div class="uk-card-media-top">
 				<img v-if="logo" :src="logo" :alt="title" width="200" height="200">

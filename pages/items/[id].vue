@@ -20,7 +20,7 @@
 
 	const { data: item } = await useAsyncData(async () => {
 		const { data } = await supabase
-		.from('items').select('*, category(id, title), brands(id, title), franchises(id, title, logo), series(id, title, logo))').order('id', { ascending: true }).eq('id', route.params.id);
+		.from('items').select('*, category(id, title), brands(id, title, logo), franchises(id, title, logo), series(id, title, logo))').order('id', { ascending: true }).eq('id', route.params.id);
 		return data;
 	});
 
@@ -99,15 +99,33 @@
 		</figure>
 		<div class="uk-width-3-5@m uk-width-2-3@l">
 			<h1>{{ itemInfo.title }}</h1>
-			<ul class="uk-list uk-list-divider">
-				<li>Category: <NuxtLink :to="'/categories/' + itemInfo.category.id"> {{ itemInfo.category.title }}</NuxtLink></li>
-				<li>Brand: <NuxtLink :to="'/brands/' + itemInfo.brands.id"> {{ itemInfo.brands.title }}</NuxtLink></li>
-				<li>Franchise: <NuxtLink :to="'/franchises/' + itemInfo.franchises.id"> {{ itemInfo.franchises.title }}</NuxtLink></li>
-				<li v-if="itemInfo.series">Series: <NuxtLink :to="'/franchises/' + itemInfo.franchises.id + '/series/' + itemInfo.series.id">{{ itemInfo.series.title }}</NuxtLink></li>
-			</ul>
 
-			<section id="item-boxes" class="uk-section uk-section-xsmall">
-				<div class="uk-grid uk-grid-small uk-flex-middle uk-child-width-1-3 uk-child-width-expand@ uk-text-center uk-text-small" uk-grid uk-height-match="target: .uk-card">
+			<div class="uk-grid uk-grid-small" uk-grid>
+				<div class="uk-width-2-3@m">
+					<ul class="uk-list uk-list-divider">
+						<li>Category: <NuxtLink :to="'/categories/' + itemInfo.category.id"> {{ itemInfo.category.title }}</NuxtLink></li>
+						<li>Brand: <NuxtLink :to="'/brands/' + itemInfo.brands.id"> {{ itemInfo.brands.title }}</NuxtLink></li>
+						<li>Franchise: <NuxtLink :to="'/franchises/' + itemInfo.franchises.id"> {{ itemInfo.franchises.title }}</NuxtLink></li>
+						<li v-if="itemInfo.series">Series: <NuxtLink :to="'/franchises/' + itemInfo.franchises.id + '/series/' + itemInfo.series.id">{{ itemInfo.series.title }}</NuxtLink></li>
+					</ul>
+				</div>
+				<div class="uk-width-expand@m item-boxes uk-text-center uk-align-right@m" uk-margin>
+					<div class="uk-card uk-card-body uk-card-small uk-card-default">
+						<img :src="itemInfo.brands.logo" :alt="itemInfo.brands.title" v-if="itemInfo.brands.logo">
+						<img v-else src="assets/placeholder.png" :alt="itemInfo.brands.title">
+					</div>
+				</div>
+			</div>
+
+			<section class="item-boxes uk-margin-medium">
+				<div class="uk-grid uk-grid-small uk-flex-middle uk-child-width-1-3 uk-child-width-expand@m uk-text-center" uk-grid uk-height-match="target: .uk-card">
+
+					<!-- <div>
+						<div class="uk-card uk-card-body uk-card-small uk-card-default">
+							<img :src="itemInfo.brands.logo" :alt="itemInfo.brands.title" v-if="itemInfo.brands.logo">
+							<img v-else src="assets/placeholder.png" :alt="itemInfo.brands.title">
+						</div>
+					</div> -->
 
 					<div>
 						<div class="uk-card uk-card-body uk-card-small uk-card-default">
@@ -209,7 +227,7 @@
 			</ul>
 		</div>
 	</div>
-	<pre>
+	<!-- <pre>
 		{{ item }}
-	</pre>
+	</pre> -->
 </template>

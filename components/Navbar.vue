@@ -13,15 +13,15 @@
 	};
 
 	const { data: categories } = await useAsyncData(async () => {
-		const { data } = await supabase.from('category').select('id, title')
+		const { data } = await supabase.from('category').select('id, title').order('id', { ascending: true })
 		return data
 	});
 	const { data: brands } = await useAsyncData(async () => {
-		const { data } = await supabase.from('brands').select('id, title')
+		const { data } = await supabase.from('brands').select('id, title').order('id', { ascending: true })
 		return data
 	});
 	const { data: franchises } = await useAsyncData(async () => {
-		const { data } = await supabase.from('franchises').select('id, title, series(id, title)')
+		const { data } = await supabase.from('franchises').select('id, title, series(id, title)').order('id', { ascending: true })
 		return data
 	});
 
@@ -131,6 +131,9 @@
 					<NuxtLink to="/items">Items</NuxtLink>
 				</li>
 				<li>
+					<NuxtLink to="/categories">Categories</NuxtLink>
+				</li>
+				<li>
 					<NuxtLink to="/brands">Brands</NuxtLink>
 				</li>
 				<li>
@@ -139,6 +142,23 @@
 				<li>
 					<NuxtLink to="/profiles">Profiles</NuxtLink>
 				</li>
+				<li class="uk-nav-divider"></li>
+				<li class="uk-nav-header">User</li>
+				<template v-if="!user">
+					<li>
+						<NuxtLink to="/login">Login</NuxtLink>
+					</li>
+					<li>
+						<NuxtLink to="/register">Register</NuxtLink>
+					</li>
+				</template>
+				<template v-else>
+					<li>
+						<NuxtLink to="/mycollection"><span uk-icon="icon: database"></span> My Collection</NuxtLink>
+					</li>
+					<li><NuxtLink to="/profile">Mi Perfil</NuxtLink></li>
+					<li><a href="" @click="logout">Salir</a></li>
+				</template>
 			</ul>
 
 		</div>

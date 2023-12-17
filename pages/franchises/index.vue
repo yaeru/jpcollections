@@ -2,7 +2,7 @@
 	const supabase = useSupabaseClient();
 
 	const { data: franchises } = await useAsyncData(async () => {
-		const { data } = await supabase.from('franchises').select('*, series(id, title)')
+		const { data } = await supabase.from('franchises').select('id,title,logo').order('id', { ascending: true })
 		return data
 	});
 
@@ -10,18 +10,13 @@
 
 <template>
 	<h1>Franchises</h1>
-	<ul class="uk-list">
+	<GridGeneral>
 		<li v-for="franchise in franchises" :key="franchise.id">
-			<NuxtLink :to="'/franchises/' + franchise.id">{{franchise.title}}</NuxtLink>
-			<ul>
-				<li v-for="serie in franchise.series" :key="serie.id">
-					<NuxtLink :to="'/franchises/' + franchise.id + '/series/' + serie.id">{{serie.title}}</NuxtLink>
-				</li>
-			</ul>
+			<FranchiseItem :id="franchise.id" :title="franchise.title" :logo="franchise.logo" />
 		</li>
-	</ul>
+	</GridGeneral>
 
-	<pre>
+	<!-- <pre>
 		{{ franchises }}
-	</pre>
+	</pre> -->
 </template>

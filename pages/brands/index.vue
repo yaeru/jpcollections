@@ -2,7 +2,7 @@
 	const supabase = useSupabaseClient();
 
 	const { data: brands } = await useAsyncData(async () => {
-		const { data } = await supabase.from('brands').select('*')
+		const { data } = await supabase.from('brands').select('*').order('id', { ascending: true })
 		return data
 	});
 
@@ -16,16 +16,14 @@
 
 <template>
 	<h1>{{pageTitle}}</h1>
-	<ul>
-		<li v-for="brand in brands" :key="brand.id">
-			{{brand.title}} -
-			<NuxtLink :to="'/brands/' + brand.id">
-				Ver
-			</NuxtLink>
-		</li>
-	</ul>
 
-	<pre>
+	<GridGeneral>
+		<li v-for="brand in brands" :key="brand.id">
+			<BrandItem :id="brand.id" :title="brand.title" :logo="brand.logo" />
+		</li>
+	</GridGeneral>
+
+	<!-- <pre>
 		{{ brands }}
-	</pre>
+	</pre> -->
 </template>

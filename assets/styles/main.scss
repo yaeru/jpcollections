@@ -56,11 +56,18 @@ a:hover {
 }
 
 /* Items */
-#item-boxes {
+.item-boxes {
 	.uk-card {
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		img {
+			max-width: 80px;
+			max-height: 80px;
+			@media (min-width: $breakpoint-medium) {
+				max-width: 150px;
+			}
+		}
 	}
 	.item-code {
 		width: 50px;
@@ -73,7 +80,7 @@ a:hover {
 			font-family: arial;
 			font-weight: 600;
 			font-size: 15px;
-			line-height: 1.2em;
+			line-height: 1em;
 			color: black;
 			position: absolute;
 			bottom: 0;

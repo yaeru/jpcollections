@@ -27,11 +27,11 @@
 		<h3>My current items</h3>
 
 		<template v-if="useritems.length > 0">
-			<ul class="uk-grid uk-child-width-1-2@s uk-grid uk-child-width-1-3@m uk-child-width-1-5@l" uk-grid uk-height-match="target: .uk-card">
+			<GridGeneral>
 				<li v-for="item in useritems" :key="item.id">
 					<Item :id="item.items_id" :title="item.title"  />
 				</li>
-			</ul>
+			</GridGeneral>
 		</template>
 		<template v-else>
 			No hay Items en tu coleccion. Añadí algunos de <NuxtLink to="/items">acá!</NuxtLink>
