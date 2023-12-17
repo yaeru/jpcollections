@@ -43,7 +43,6 @@
 			return filtroNombre && filtroBrand && filtroFranchise;
 		});
 	});
-
 	const pageTitle = 'Items'
 	useSeoMeta({
 		title:  pageTitle,
