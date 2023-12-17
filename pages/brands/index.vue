@@ -6,10 +6,16 @@
 		return data
 	});
 
+	const pageTitle = 'Brands'
+	useSeoMeta({
+		title:  pageTitle,
+		ogTitle: pageTitle,
+	})
+
 </script>
 
 <template>
-	<h1>Brands</h1>
+	<h1>{{pageTitle}}</h1>
 	<ul>
 		<li v-for="brand in brands" :key="brand.id">
 			{{brand.title}} -

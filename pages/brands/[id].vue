@@ -13,10 +13,17 @@
 
 	// Obtén el primer elemento del array o un objeto vacío si el array está vacío
 	const brandInfo = brand.value[0] || {};
+
+
+	const pageTitle = brandInfo.title
+	useSeoMeta({
+		title:  pageTitle,
+		ogTitle: pageTitle,
+	})
 </script>
 
 <template>
-	<h1>{{ brandInfo.title }}</h1>
+	<h1>{{ pageTitle }}</h1>
 	<h2>Items in this Brand</h2>
 	<ul class="uk-grid uk-child-width-1-2@s uk-grid uk-child-width-1-3@m uk-child-width-1-5@l" uk-grid uk-height-match="target: .uk-card">
 		<li v-for="item in brandInfo.items" :key="item.id">

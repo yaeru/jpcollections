@@ -44,10 +44,16 @@
 		});
 	});
 
+	const pageTitle = 'Items'
+	useSeoMeta({
+		title:  pageTitle,
+		ogTitle: pageTitle,
+	})
+
 </script>
 
 <template>
-	<h1>Items</h1>
+	<h1>{{pageTitle}}</h1>
 	<div class="uk-grid" uk-grid>
 		<aside class="uk-width-1-3@s uk-width-1-4@m" uk-margin>
 			

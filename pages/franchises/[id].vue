@@ -13,6 +13,13 @@
 
 	// Obtén el primer elemento del array o un objeto vacío si el array está vacío
 	const franchiseInfo = franchise.value[0] || {};
+
+
+	const pageTitle = franchiseInfo.title
+	useSeoMeta({
+		title:  pageTitle,
+		ogTitle: pageTitle,
+	})
 </script>
 
 <template>

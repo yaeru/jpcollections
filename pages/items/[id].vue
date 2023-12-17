@@ -1,4 +1,6 @@
 <script setup lang="ts">
+	
+
 	import { ref, onMounted } from 'vue';
 
 	const supabase = useSupabaseClient();
@@ -60,9 +62,16 @@
 			isInCollection.value = false;
 		}
 	};
+
+	const pageTitle = itemInfo.title
+	useSeoMeta({
+		title:  pageTitle,
+		ogTitle: pageTitle,
+	})
 </script>
 
 <template>
+
 	<div class="uk-grid" uk-grid>
 		<figure class="uk-width-2-5@m uk-width-1-3@l">
 			<img src="assets/placeholder.png" class="uk-border-rounded" width="100%">
