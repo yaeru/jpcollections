@@ -1,4 +1,5 @@
 <script setup lang="ts">
+	const supabase = useSupabaseClient();
 	const user = useSupabaseUser();
 	const supaAuth = useSupabaseClient().auth;
 
@@ -10,9 +11,20 @@
 			//return navigateTo('/login');
 		}
 	};
+
+	const { data: brands } = await useAsyncData(async () => {
+		const { data } = await supabase.from('brands').select('id, title')
+		return data
+	});
+	const { data: franchises } = await useAsyncData(async () => {
+		const { data } = await supabase.from('franchises').select('id, title, series(id, title)')
+		return data
+	});
+
 	const close = async () => {
 		UIkit.offcanvas(element).hide();
 	}
+
 </script>
 
 <template>
@@ -29,10 +41,24 @@
 							<NuxtLink to="/items">Items</NuxtLink>
 						</li>
 						<li>
-							<NuxtLink to="/brands">Brands</NuxtLink>
+							<NuxtLink to="/brands">Brands <span uk-navbar-parent-icon></span></NuxtLink>
+							<div class="uk-navbar-dropdown">
+								<ul class="uk-nav uk-navbar-dropdown-nav">
+									<li v-for="brand in brands" :key="brand.id">
+										<NuxtLink :to="'/brands/' + brand.id">{{brand.title}}</NuxtLink>
+									</li>
+								</ul>
+							</div>
 						</li>
 						<li>
-							<NuxtLink to="/franchises">Franchises</NuxtLink>
+							<NuxtLink to="/franchises">Franchises  <span uk-navbar-parent-icon></span></NuxtLink>
+							<div class="uk-navbar-dropdown">
+								<ul class="uk-nav uk-navbar-dropdown-nav">
+									<li v-for="franchise in franchises" :key="franchise.id">
+										<NuxtLink :to="'/franchises/' + franchise.id">{{franchise.title}}</NuxtLink>
+									</li>
+								</ul>
+							</div>
 						</li>
 						<li>
 							<NuxtLink to="/profiles">Profiles</NuxtLink>

@@ -18,7 +18,7 @@
 
 	const { data: item } = await useAsyncData(async () => {
 		const { data } = await supabase
-		.from('items').select('*, brands(id, title), franchises(id, title)').order('id', { ascending: true }).eq('id', route.params.id);
+		.from('items').select('*, brands(id, title), franchises(id, title), series(id, title))').order('id', { ascending: true }).eq('id', route.params.id);
 		return data;
 	});
 
@@ -68,13 +68,32 @@
 			<img src="assets/placeholder.png" class="uk-border-rounded" width="100%">
 		</figure>
 		<div class="uk-width-3-5@m uk-width-2-3@l">
-			<h1>{{ itemInfo.title }} id: {{ itemInfo.id }}</h1>
+			<h1>{{ itemInfo.title }}</h1>
 			<ul>
 				<li>Brand: <NuxtLink :to="'/brands/' + itemInfo.brands.id"> {{ itemInfo.brands.title }}</NuxtLink></li>
 				<li>Franchise: <NuxtLink :to="'/franchises/' + itemInfo.franchises.id"> {{ itemInfo.franchises.title }}</NuxtLink></li>
-				<li>Release date: ****</li>
-				<li>Code: {{ itemInfo.code }}</li>
-				<li>Type: Human</li>
+				<li v-if="itemInfo.series">Series: <NuxtLink :to="'/franchises/' + itemInfo.franchises.id + '/series/' + itemInfo.series.id">{{ itemInfo.series.title }}</NuxtLink></li>
+				<li v-if="itemInfo.release_year">Release date: {{ itemInfo.release_year }}</li>
+				<li v-if="itemInfo.code">Code: {{ itemInfo.code }}</li>
+				<li v-if="itemInfo.type">Type:
+					<template v-if="itemInfo.type === 'Dinosaurio' ">
+						🦖
+					</template>
+					<template v-if="itemInfo.type === 'Humano' ">
+						🙍‍♂️
+					</template>
+					<template v-if="itemInfo.type === 'Vehículo' ">
+						🚙
+					</template>
+					<template v-if="itemInfo.type === 'Set' ">
+						🏘️
+					</template>
+					<template v-if="itemInfo.type === 'Otro' ">
+						🎲
+					</template>
+
+					{{itemInfo.type}}
+				</li>
 			</ul>
 			<template v-if="user">
 				<NuxtLink v-if="!isInCollection" class="uk-button uk-button-primary" @click="addtocollection">
@@ -123,7 +142,7 @@
 			</ul>
 		</div>
 	</div>
-	<!-- <pre>
+	<pre>
 		{{ item }}
-	</pre> -->
+	</pre>
 </template>
