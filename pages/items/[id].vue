@@ -20,7 +20,7 @@
 
 	const { data: item } = await useAsyncData(async () => {
 		const { data } = await supabase
-		.from('items').select('*, brands(id, title), franchises(id, title), series(id, title))').order('id', { ascending: true }).eq('id', route.params.id);
+		.from('items').select('*, category(id, title), brands(id, title), franchises(id, title, logo), series(id, title, logo))').order('id', { ascending: true }).eq('id', route.params.id);
 		return data;
 	});
 
@@ -75,54 +75,112 @@
 	<div class="uk-grid" uk-grid>
 		<figure class="uk-width-2-5@m uk-width-1-3@l">
 			<img src="assets/placeholder.png" class="uk-border-rounded" width="100%">
+
+			<div class="uk-visible@m uk-margin-small-top">
+				<template v-if="user">
+					<NuxtLink v-if="!isInCollection" class="uk-button uk-button-primary uk-width-expand" @click="addtocollection">
+						<span class="uk-margin-small-right" uk-icon="check"></span> Añadir a mi colección
+					</NuxtLink>
+
+					<NuxtLink v-if="isInCollection" class="uk-button uk-button-danger uk-width-expand" @click="removetocollection">
+						<span class="uk-margin-small-right" uk-icon="close"></span> Quitar de mi colección
+					</NuxtLink>
+
+					<NuxtLink class="uk-button uk-button-default uk-width-expand uk-margin-small-top">
+						<span class="uk-margin-small-right" uk-icon="heart"></span> Wishlist
+					</NuxtLink>
+				</template>
+				<template v-else>
+					<NuxtLink to="/login" class="uk-button uk-button-primary uk-width-expand">
+						Ingresa para administrar tu cuenta
+					</NuxtLink>
+				</template>
+			</div>
 		</figure>
 		<div class="uk-width-3-5@m uk-width-2-3@l">
 			<h1>{{ itemInfo.title }}</h1>
-			<ul>
+			<ul class="uk-list uk-list-divider">
+				<li>Category: <NuxtLink :to="'/categories/' + itemInfo.category.id"> {{ itemInfo.category.title }}</NuxtLink></li>
 				<li>Brand: <NuxtLink :to="'/brands/' + itemInfo.brands.id"> {{ itemInfo.brands.title }}</NuxtLink></li>
 				<li>Franchise: <NuxtLink :to="'/franchises/' + itemInfo.franchises.id"> {{ itemInfo.franchises.title }}</NuxtLink></li>
 				<li v-if="itemInfo.series">Series: <NuxtLink :to="'/franchises/' + itemInfo.franchises.id + '/series/' + itemInfo.series.id">{{ itemInfo.series.title }}</NuxtLink></li>
-				<li v-if="itemInfo.release_year">Release date: {{ itemInfo.release_year }}</li>
-				<li v-if="itemInfo.code">Code: {{ itemInfo.code }}</li>
-				<li v-if="itemInfo.type">Type:
-					<template v-if="itemInfo.type === 'Dinosaurio' ">
-						🦖
-					</template>
-					<template v-if="itemInfo.type === 'Humano' ">
-						🙍‍♂️
-					</template>
-					<template v-if="itemInfo.type === 'Vehículo' ">
-						🚙
-					</template>
-					<template v-if="itemInfo.type === 'Set' ">
-						🏘️
-					</template>
-					<template v-if="itemInfo.type === 'Otro' ">
-						🎲
-					</template>
-
-					{{itemInfo.type}}
-				</li>
 			</ul>
-			<template v-if="user">
-				<NuxtLink v-if="!isInCollection" class="uk-button uk-button-primary" @click="addtocollection">
-					<span class="uk-margin-small-right" uk-icon="check"></span> Añadir a mi colección
-				</NuxtLink>
 
-				<NuxtLink v-if="isInCollection" class="uk-button uk-button-danger" @click="removetocollection">
-					<span class="uk-margin-small-right" uk-icon="close"></span> Quitar de mi colección
-				</NuxtLink>
+			<section id="item-boxes" class="uk-section uk-section-xsmall">
+				<div class="uk-grid uk-grid-small uk-flex-middle uk-child-width-1-3 uk-child-width-expand@ uk-text-center uk-text-small" uk-grid uk-height-match="target: .uk-card">
 
-				<NuxtLink class="uk-button uk-button-default uk-margin-small-left">
-					<span class="uk-margin-small-right" uk-icon="heart"></span> Wishlist
-				</NuxtLink>
-			</template>
+					<div>
+						<div class="uk-card uk-card-body uk-card-small uk-card-default">
+							<img :src="itemInfo.series.logo" :alt="itemInfo.series.title" v-if="itemInfo.series">
+							<img :src="itemInfo.franchises.logo" :alt="itemInfo.franchises.title" v-else>
+						</div>
+					</div>
+					<div v-if="itemInfo.code">
+						<div class="uk-card uk-card-body uk-card-small uk-card-default">
+							<div class="item-code">
+								<img :src="'/codes/code-' + itemInfo.franchises.title.replace(/\s+/g, '') + '.svg'" width="50" class="item-code-letters">
+								<div class="item-code-number">
+									{{ itemInfo.code }}
+								</div>
+							</div>
+						</div>
+					</div>
+					<div>
+						<div class="uk-card uk-card-body uk-card-small uk-card-default">
+							📂<br>
+							{{ itemInfo.category.title }}
+						</div>
+					</div>
+					<div v-if="itemInfo.release_year">
+						<div class="uk-card uk-card-body uk-card-small uk-card-default">
+							📅<br>
+							{{ itemInfo.release_year }}
+						</div>
+					</div>
+					<div>
+						<div class="uk-card uk-card-body uk-card-small uk-card-default">
+							<template v-if="itemInfo.type === 'Dinosaurio' ">
+								🦖
+							</template>
+							<template v-if="itemInfo.type === 'Humano' ">
+								🙍‍♂️
+							</template>
+							<template v-if="itemInfo.type === 'Vehículo' ">
+								🚙
+							</template>
+							<template v-if="itemInfo.type === 'Set' ">
+								🏘️
+							</template>
+							<template v-if="itemInfo.type === 'Otro' ">
+								🎲
+							</template>
+							<br>
+							{{itemInfo.type}}
+						</div>
+					</div>
+				</div>
+			</section>
 
-			<template v-else>
-				<NuxtLink to="/login" class="uk-button uk-button-primary">
-					Ingresa para administrar tu cuenta
-				</NuxtLink>
-			</template>
+			<div class="uk-hidden@m uk-margin-small-top">
+				<template v-if="user">
+					<NuxtLink v-if="!isInCollection" class="uk-button uk-button-primary uk-width-expand" @click="addtocollection">
+						<span class="uk-margin-small-right" uk-icon="check"></span> Añadir a mi colección
+					</NuxtLink>
+
+					<NuxtLink v-if="isInCollection" class="uk-button uk-button-danger uk-width-expand" @click="removetocollection">
+						<span class="uk-margin-small-right" uk-icon="close"></span> Quitar de mi colección
+					</NuxtLink>
+
+					<NuxtLink class="uk-button uk-button-default uk-width-expand uk-margin-small-top">
+						<span class="uk-margin-small-right" uk-icon="heart"></span> Wishlist
+					</NuxtLink>
+				</template>
+				<template v-else>
+					<NuxtLink to="/login" class="uk-button uk-button-primary uk-width-expand">
+						Ingresa para administrar tu cuenta
+					</NuxtLink>
+				</template>
+			</div>
 		</div>
 	</div>
 

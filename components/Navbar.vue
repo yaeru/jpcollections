@@ -12,6 +12,10 @@
 		}
 	};
 
+	const { data: categories } = await useAsyncData(async () => {
+		const { data } = await supabase.from('category').select('id, title')
+		return data
+	});
 	const { data: brands } = await useAsyncData(async () => {
 		const { data } = await supabase.from('brands').select('id, title')
 		return data
@@ -39,6 +43,16 @@
 						</li>
 						<li>
 							<NuxtLink to="/items">Items</NuxtLink>
+						</li>
+						<li>
+							<NuxtLink to="/categories">Categories <span uk-navbar-parent-icon></span></NuxtLink>
+							<div class="uk-navbar-dropdown">
+								<ul class="uk-nav uk-navbar-dropdown-nav">
+									<li v-for="category in categories" :key="category.id">
+										<NuxtLink :to="'/categories/' + category.id">{{category.title}}</NuxtLink>
+									</li>
+								</ul>
+							</div>
 						</li>
 						<li>
 							<NuxtLink to="/brands">Brands <span uk-navbar-parent-icon></span></NuxtLink>

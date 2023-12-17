@@ -26,8 +26,6 @@ a:hover {
 	@if(mixin-exists(hook-nav-primary-item-hover)) {@include hook-nav-primary-item-hover();}
 }
 
-
-
 /* Active */
 .router-link-active {
 	color: $nav-primary-item-active-color;
@@ -42,4 +40,45 @@ a:hover {
 }
 .text-balance {
 	text-wrap: balance;
+}
+
+/**/
+.brand-item {
+	height: 120px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	img {
+		max-height: 100px;
+		object-fit: contain;
+	}
+	
+}
+
+/* Items */
+#item-boxes {
+	.uk-card {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.item-code {
+		width: 50px;
+		height: 38px;
+		position: relative;
+		.item-code-letters {
+			letter-spacing: -11px;
+		}
+		.item-code-number {
+			font-family: arial;
+			font-weight: 600;
+			font-size: 15px;
+			line-height: 1.2em;
+			color: black;
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			
+		}
+	}
 }

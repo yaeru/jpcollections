@@ -25,7 +25,7 @@
 <template>
 	<h1>{{ franchiseInfo.title }}</h1>
 	<h2>Items in this Franchise</h2>
-	<ul class="uk-grid uk-child-width-1-2@s uk-grid uk-child-width-1-3@m uk-child-width-1-5@l" uk-grid uk-height-match="target: .uk-card">
+	<ul class="uk-grid uk-grid-small uk-child-width-1-2 uk-child-width-1-3@m uk-child-width-1-4@l" uk-grid uk-height-match="target: .uk-card">
 		<li v-for="item in franchiseInfo.items" :key="item.id">
 			<Item :id="item.id" :title="item.title" :brandId="item.brands.id" :brandTitle="item.brands.title" />
 		</li>

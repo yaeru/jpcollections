@@ -2,18 +2,18 @@
 	const props = defineProps({
 		id: String,
 		title: String,
+		logo: String,
 	});
 </script>
 
 <template>
-	<NuxtLink :to="'/franchises/' + id">
-		<article class="uk-card uk-card-small uk-text-center">
+	<NuxtLink :to="'/franchises/' + id" class="uk-text-center">
+		<article class="uk-card uk-card-small uk-card-default uk-card-body">
 			<div class="uk-card-media-top">
-				<img src="https://getuikit.com/docs/images/light.jpg" width="1800" height="1200" alt="">
-			</div>
-			<div class="uk-card-body">
-				<h3 class="uk-card-title">{{title}}</h3>
+				<img v-if="logo" :src="logo" :alt="title" width="200" height="200">
+				<img v-else src="assets/placeholder.png" :alt="title" width="200" height="200">
 			</div>
 		</article>
+		<h3 class="uk-card-title uk-margin-top">{{title}}</h3>
 	</NuxtLink>
 </template>
