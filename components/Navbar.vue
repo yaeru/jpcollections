@@ -12,10 +12,10 @@
 		}
 	};
 
-	const { data: categories } = await useAsyncData(async () => {
-		const { data } = await supabase.from('category').select('id, title').order('id', { ascending: true })
-		return data
-	});
+	// const { data: categories } = await useAsyncData(async () => {
+	// 	const { data } = await supabase.from('category').select('id, title').order('id', { ascending: true })
+	// 	return data
+	// });
 	const { data: brands } = await useAsyncData(async () => {
 		const { data } = await supabase.from('brands').select('id, title').order('id', { ascending: true })
 		return data
@@ -44,7 +44,7 @@
 						<li>
 							<NuxtLink to="/items">Items</NuxtLink>
 						</li>
-						<li>
+						<!-- <li>
 							<NuxtLink to="/categories">Categories <span uk-navbar-parent-icon></span></NuxtLink>
 							<div class="uk-navbar-dropdown">
 								<ul class="uk-nav uk-navbar-dropdown-nav">
@@ -53,7 +53,7 @@
 									</li>
 								</ul>
 							</div>
-						</li>
+						</li> -->
 						<li>
 							<NuxtLink to="/brands">Brands <span uk-navbar-parent-icon></span></NuxtLink>
 							<div class="uk-navbar-dropdown">
@@ -75,7 +75,7 @@
 							</div>
 						</li>
 						<li>
-							<NuxtLink to="/profiles">Profiles</NuxtLink>
+							<NuxtLink to="/changelog">Changelog</NuxtLink>
 						</li>
 					</ul>		
 				</div>
@@ -130,9 +130,9 @@
 				<li>
 					<NuxtLink to="/items">Items</NuxtLink>
 				</li>
-				<li>
+				<!-- <li>
 					<NuxtLink to="/categories">Categories</NuxtLink>
-				</li>
+				</li> -->
 				<li>
 					<NuxtLink to="/brands">Brands</NuxtLink>
 				</li>
