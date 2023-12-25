@@ -1,14 +1,11 @@
 <script setup lang="ts">
-	
-
 	import { ref, onMounted } from 'vue';
 
 	const supabase = useSupabaseClient();
 	const user = useSupabaseUser();
 	const route = useRoute();
 	const itemId = ref('');
-	const isInCollection = ref(false);
-	
+	const isInCollection = ref(false);	
 	
 	onMounted(async () => {
 		const { data: { user } } = await supabase.auth.getUser();
@@ -74,7 +71,8 @@
 
 	<div class="uk-grid" uk-grid>
 		<figure class="uk-width-2-5@m uk-width-1-3@l">
-			<img src="assets/placeholder.png" class="uk-border-rounded" width="100%">
+			<img v-if="itemInfo.picture" :src="itemInfo.picture" :alt="itemInfo.title" class="uk-border-rounded" width="100%">
+			<img v-else src="assets/placeholder.png" class="uk-border-rounded" width="100%">
 
 			<div class="uk-visible@m uk-margin-small-top">
 				<template v-if="user">
@@ -84,10 +82,6 @@
 
 					<NuxtLink v-if="isInCollection" class="uk-button uk-button-danger uk-width-expand" @click="removetocollection">
 						<span class="uk-margin-small-right" uk-icon="close"></span> Quitar de mi colección
-					</NuxtLink>
-
-					<NuxtLink class="uk-button uk-button-default uk-width-expand uk-margin-small-top">
-						<span class="uk-margin-small-right" uk-icon="heart"></span> Wishlist
 					</NuxtLink>
 				</template>
 				<template v-else>
@@ -103,7 +97,7 @@
 			<div class="uk-grid uk-grid-small" uk-grid>
 				<div class="uk-width-2-3@m">
 					<ul class="uk-list uk-list-divider">
-						<li>Category: <NuxtLink :to="'/categories/' + itemInfo.category.id"> {{ itemInfo.category.title }}</NuxtLink></li>
+						<li v-if="itemInfo.category">Category: <NuxtLink :to="'/categories/' + itemInfo.category.id"> {{ itemInfo.category.title }}</NuxtLink></li>
 						<li>Brand: <NuxtLink :to="'/brands/' + itemInfo.brands.id"> {{ itemInfo.brands.title }}</NuxtLink></li>
 						<li>Franchise: <NuxtLink :to="'/franchises/' + itemInfo.franchises.id"> {{ itemInfo.franchises.title }}</NuxtLink></li>
 						<li v-if="itemInfo.series">Series: <NuxtLink :to="'/franchises/' + itemInfo.franchises.id + '/series/' + itemInfo.series.id">{{ itemInfo.series.title }}</NuxtLink></li>
@@ -143,12 +137,12 @@
 							</div>
 						</div>
 					</div>
-					<div>
+					<!-- <div>
 						<div class="uk-card uk-card-body uk-card-small uk-card-default">
 							📂<br>
 							{{ itemInfo.category.title }}
 						</div>
-					</div>
+					</div> -->
 					<div v-if="itemInfo.release_year">
 						<div class="uk-card uk-card-body uk-card-small uk-card-default">
 							📅<br>
@@ -205,20 +199,17 @@
 	<div class="uk-grid" uk-grid>
 		<div class="uk-width-2-3@m">
 			<h3>Info</h3>
+			<AppAlert state="warning">Próximamente</AppAlert>
 			<p>
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
 				consequat.
 			</p>
-			<p>
-				Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-			</p>
 		</div>
 		<div class="uk-width-1-3@m">
 			<h3>Accesories</h3>
+			<AppAlert state="warning">Próximamente</AppAlert>
 			<ul>
 				<li>Lorem ipsum dolor sit amet, consectetur</li>
 				<li>Lorem ipsum dolor sit amet, consectetur</li>

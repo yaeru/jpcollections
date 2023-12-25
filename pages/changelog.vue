@@ -1,19 +1,13 @@
 <script setup lang="ts">
-	const supabase = useSupabaseClient();
-
-	const { data: brands } = await useAsyncData(async () => {
-		const { data } = await supabase.from('brands').select('id, title,logo').order('id', { ascending: true })
-		return data
-	});
-	const { data: franchises } = await useAsyncData(async () => {
-		const { data } = await supabase.from('franchises').select('id, title,logo').order('id', { ascending: true })
-		return data
-	});
-
+	const pageTitle = "Changelog"
+	useSeoMeta({
+		title:  pageTitle,
+		ogTitle: pageTitle,
+	})
 </script>
 
 <template>
-	<h1>Changelog</h1>
+	<h1>{{pageTitle}}</h1>
 	<p class="uk-text-lead">
 		All notable changes to this project will be documented in this file.
 	</p>
@@ -36,7 +30,7 @@
 		Changed
 	</h4>
 	<ul>
-		<li>Limpieza de tests</li>
+		<li>Limpieza de código viejo</li>
 	</ul>
 	<h4>
 		Fixed

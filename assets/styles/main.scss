@@ -42,7 +42,33 @@ a:hover {
 	text-wrap: balance;
 }
 
-/**/
+/* Components */
+.page-head {
+	figure {
+		min-height: 150px;
+	}
+}
+.item-card {
+	overflow: hidden;
+	&:hover {
+		.uk-card-media-top {
+			img {
+				transform: scale(1.05);
+			}
+		}
+	}
+	.uk-card-media-top {
+		border-bottom: solid 1px #eee;
+		overflow: hidden;
+		img {
+			object-fit: cover;
+			max-height: 150px;
+			transition: ease 0.3s all;
+		}
+	}
+}
+
+/* Brands*/
 .brand-item {
 	height: 120px;
 	display: flex;
@@ -85,7 +111,6 @@ a:hover {
 			position: absolute;
 			bottom: 0;
 			right: 0;
-			
 		}
 	}
 }

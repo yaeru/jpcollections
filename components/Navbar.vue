@@ -39,9 +39,6 @@
 					<NuxtLink to="/" class="uk-navbar-item uk-logo">JP Collections</NuxtLink>
 					<ul class="uk-navbar-nav uk-visible@m">
 						<li>
-							<NuxtLink to="/">Home</NuxtLink>
-						</li>
-						<li>
 							<NuxtLink to="/items">Items</NuxtLink>
 						</li>
 						<!-- <li>

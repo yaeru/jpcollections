@@ -85,11 +85,11 @@
 				<input v-model="filtro" class="uk-search-input uk-input uk-form-large uk-width-expand" type="search" placeholder="Search items" aria-label="Search">
 			</form>
 
-			<ul class="uk-grid uk-grid-small uk-child-width-1-2 uk-child-width-1-3@m uk-child-width-1-4@l" uk-grid uk-height-match="target: .uk-card">
+			<GridGeneral>
 				<li v-for="item in itemsFiltrados" :key="item.id">
 					<Item :id="item.id" :title="item.title" :brandId="item.brands.id" :brandTitle="item.brands.title" />
 				</li>
-			</ul>
+			</GridGeneral>
 		</main>
 	</div>
 </template>

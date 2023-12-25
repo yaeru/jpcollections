@@ -6,8 +6,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       gtmContainerId: '', // set NUXT_PUBLIC_GTM_CONTAINER_ID in .env file
+      bucket: 'https://ynzcbwwycfnwikorynfr.supabase.co/storage/v1/object/public',
     },
   },
+
 
   uikit3: {
     css: {

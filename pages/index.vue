@@ -9,7 +9,11 @@
 		const { data } = await supabase.from('franchises').select('id, title,logo').order('id', { ascending: true })
 		return data
 	});
-
+	const pageTitle = "Wellcome!"
+	useSeoMeta({
+		title:  pageTitle,
+		ogTitle: pageTitle,
+	})
 </script>
 
 <template>

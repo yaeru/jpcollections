@@ -1,4 +1,3 @@
-// ~/plugins/gtm.client.ts
 export default defineNuxtPlugin(nuxtApp => {
 	nuxtApp.hooks.hook('vue:setup', () => {
 		const {

@@ -14,32 +14,30 @@
 </script>
 
 <template>
-	<section class="uk-section uk-section-small">
-		<h1>User:</h1>
-		<ul>
-			<li>ID: {{ user.id }}</li>
-			<li>Email: {{ user.email }}</li>
-			<li>phone: {{ user.phone }}</li>
-		</ul>
-	</section>
+
+	<PageHead>
+		<template v-slot:image>
+			<img src="assets/placeholder.png" width="200" height="200">
+		</template>
+		<template v-slot:title>
+			User
+		</template>
+		<template v-slot:description>
+			<ul class="uk-list">
+				<li>Email: {{ user.email }}</li>
+			</ul>
+		</template>
+	</PageHead>
 
 	<section class="uk-section uk-section-small">
 		<h3>My current items</h3>
 
-		<template v-if="useritems.length > 0">
-			<GridGeneral>
-				<li v-for="item in useritems" :key="item.id">
-					<Item :id="item.items_id" :title="item.title"  />
-				</li>
-			</GridGeneral>
-		</template>
-		<template v-else>
-			No hay Items en tu coleccion. Añadí algunos de <NuxtLink to="/items">acá!</NuxtLink>
-		</template>
-		
-		<pre>
-			{{useritems}}
-		</pre>
+		<GridGeneral v-if="useritems.length > 0">
+			<li v-for="item in useritems" :key="item.id">
+				<Item :id="item.items_id" :title="item.title"  />
+			</li>
+		</GridGeneral>
+		<AppAlert v-else state="danger">No hay Items en tu coleccion. Añadí algunos de <NuxtLink to="/items">acá!</NuxtLink></AppAlert>
 	</section>
 
 </template>

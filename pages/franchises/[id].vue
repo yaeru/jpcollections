@@ -14,7 +14,7 @@
 	// Obtén el primer elemento del array o un objeto vacío si el array está vacío
 	const franchiseInfo = franchise.value[0] || {};
 
-
+	// Meta
 	const pageTitle = franchiseInfo.title
 	useSeoMeta({
 		title:  pageTitle,
@@ -32,24 +32,17 @@
 			{{ franchiseInfo.title }}
 		</template>
 		<template v-slot:description>
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.
 		</template>
 	</PageHead>
 	
-	<h2>Items in this Franchise</h2>
-	<GridGeneral>
+	<h2 class="uk-heading-divider">Items in this Franchise</h2>
+
+	<GridGeneral v-if="franchiseInfo.items.length > 0">
 		<li v-for="item in franchiseInfo.items" :key="item.id">
 			<Item :id="item.id" :title="item.title" :brandId="item.brands.id" :brandTitle="item.brands.title" :categoryTitle="item.category.title" />
 		</li>
 	</GridGeneral>
 
-	<ul>
-		<li v-for="item in franchiseInfo.items" :key="item.id">
-			<h3>{{item.category.title}}</h3>
-		</li>
-	</ul>
-
-	<pre>
-		{{ franchise }}
-	</pre>
+	<AppAlert v-else state="danger">No hay Items</AppAlert>
 </template>
